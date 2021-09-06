@@ -13,7 +13,7 @@ class dishController extends Controller
      */
     public function index()
     {
-        //
+        return view ('show_all_dishes');
     }
 
     /**
@@ -23,7 +23,7 @@ class dishController extends Controller
      */
     public function create()
     {
-        //
+        return view ('add_new_dishes');
     }
 
     /**
