@@ -43,11 +43,22 @@ class dishController extends Controller
             'dishDescription' => 'required',
         ]);
 
+if ($request->dishImage)
+{
+    $validated = $request->validate([
+        'dishImage' => 'nullable|file|image|mimes:jpeg,png,jpg|max:10000',
+    ]);
+    $imageName = date('mdYHis').uniqid().'.'.$request->dishImage->extension();
+    $request->dishImage->move(public_path('uploaded_imgs'),$imageName);
+}else{
+    $imageName = 'no_image.png';
+}
+
         $dishModel_obj = new dishModel;
         $dishModel_obj->dish_name = $request->dishName;
         $dishModel_obj->dish_price = $request->dishPrice;
         $dishModel_obj->dish_description = $request->dishDescription;
-        $dishModel_obj->dish_image = $request->dishImage;
+        $dishModel_obj->dish_image = $imageName;
         $dishModel_obj->save();
         return redirect('/');
     }
