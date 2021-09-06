@@ -29,7 +29,8 @@
 </div>
   
 <div class="container">
-            <form action="dishes" method="POST" enctype="multipart/form-data">
+            <form action="/dishes" method="POST" enctype="multipart/form-data">
+            @csrf
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Dish Name</label>
                     <input type="text" name="dishName" class="form-control" id="">
@@ -47,8 +48,8 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Dish Description</label>
-                    <input type="text" name="dishDescription" class="form-control" id="">
+                    <label for="exampleInputEmail1" class="form-label">Dish Image</label>
+                    <input type="file" name="dishImage" class="form-control" id="">
                     <div id="emailHelp" class="form-text">We'll never share it with anyone else.</div>
                 </div>
 

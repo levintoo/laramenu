@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\dishModel;
+
 class dishController extends Controller
 {
     /**
@@ -34,7 +36,12 @@ class dishController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dishModel_obj = new dishModel;
+        $dishModel_obj->dish_name = $request->dishName;
+        $dishModel_obj->dish_price = $request->dishPrice;
+        $dishModel_obj->dish_description = $request->dishDescription;
+        $dishModel_obj->dish_image = $request->dishImage;
+        $dishModel_obj->save();
     }
 
     /**

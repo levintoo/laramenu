@@ -20,3 +20,4 @@ Route::get('/', function () {
 Route::resource('dishes','App\Http\Controllers\dishController');
 
 Route::get('dishes\create','App\Http\Controllers\dishController@create');
+
