@@ -36,12 +36,20 @@ class dishController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validated = $request->validate([
+            'dishName' => 'required',
+            'dishPrice' => 'required',
+            'dishDescription' => 'required',
+        ]);
+
         $dishModel_obj = new dishModel;
         $dishModel_obj->dish_name = $request->dishName;
         $dishModel_obj->dish_price = $request->dishPrice;
         $dishModel_obj->dish_description = $request->dishDescription;
         $dishModel_obj->dish_image = $request->dishImage;
         $dishModel_obj->save();
+        return redirect('/');
     }
 
     /**
