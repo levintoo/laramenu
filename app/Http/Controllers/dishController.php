@@ -13,7 +13,7 @@ class dishController extends Controller
      */
     public function index()
     {
-        return view ('show_all_dishes');
+        //
     }
 
     /**
