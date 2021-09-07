@@ -25,7 +25,7 @@
     <div class="jumbotron bg-light p-5 text-center">
   <h1>Add new dish</h1>
   <p>Resize this responsive page to see the effect!</p> 
-  <a href="/" class="float-end btn btn-primary">Add dish</a>
+  <a href="/" class="float-end btn btn-primary">Back</a>
 </div>
   
 <div class="container">

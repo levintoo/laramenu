@@ -60,7 +60,8 @@ if ($request->dishImage)
         $dishModel_obj->dish_description = $request->dishDescription;
         $dishModel_obj->dish_image = $imageName;
         $dishModel_obj->save();
-        return redirect('/');
+        $request->session()->flash('status','Dish inserted sucessfully');
+        return redirect('dishes');
     }
 
     /**

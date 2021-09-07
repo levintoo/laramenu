@@ -27,9 +27,13 @@
   <p>Resize this responsive page to see the effect!</p> 
   <a href="dishes/create" class="float-end btn btn-primary">Add dish</a>
 </div>
-  
-<div class="container">
-
+  <div class="container">
+      @if(session()->has('status'))
+      <div class="alert alert-success">
+          {{session()->get('status')}}
+        <button class="close" data-dismiss='alert'>X</button>
+        </div>
+        @endif
 </div>
 
     </body>
