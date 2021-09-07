@@ -16,7 +16,7 @@ class dishController extends Controller
     public function index()
     {
         $dishes = dishModel::all();
-        return view ('show_all_dishes')->with('dishes', $dishes);
+        return view('show_all_dishes')->with('dishes', $dishes);
     }
 
     /**
@@ -26,7 +26,7 @@ class dishController extends Controller
      */
     public function create()
     {
-        return view ('add_new_dishes');
+        return view('add_new_dishes');
     }
 
     /**
@@ -44,16 +44,15 @@ class dishController extends Controller
             'dishDescription' => 'required',
         ]);
 
-if ($request->dishImage)
-{
-    $validated = $request->validate([
-        'dishImage' => 'nullable|file|image|mimes:jpeg,png,jpg|max:10000',
-    ]);
-    $imageName = date('mdYHis').uniqid().'.'.$request->dishImage->extension();
-    $request->dishImage->move(public_path('uploaded_imgs'),$imageName);
-}else{
-    $imageName = 'no_image.png';
-}
+        if ($request->dishImage) {
+            $validated = $request->validate([
+                'dishImage' => 'nullable|file|image|mimes:jpeg,png,jpg|max:10000',
+            ]);
+            $imageName = date('mdYHis') . uniqid() . '.' . $request->dishImage->extension();
+            $request->dishImage->move(public_path('uploaded_imgs'), $imageName);
+        } else {
+            $imageName = 'no_image.png';
+        }
 
         $dishModel_obj = new dishModel;
         $dishModel_obj->dish_name = $request->dishName;
@@ -61,7 +60,7 @@ if ($request->dishImage)
         $dishModel_obj->dish_description = $request->dishDescription;
         $dishModel_obj->dish_image = $imageName;
         $dishModel_obj->save();
-        $request->session()->flash('status','Dish inserted sucessfully');
+        $request->session()->flash('status', 'Dish inserted sucessfully');
         return redirect('dishes');
     }
 
@@ -85,7 +84,7 @@ if ($request->dishImage)
     public function edit($id)
     {
         $dish = dishModel::find($id);
-        return view ('edit_dish')->with('dish', $dish);
+        return view('edit_dish')->with('dish', $dish);
     }
 
     /**
@@ -96,31 +95,28 @@ if ($request->dishImage)
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {       
-         $dishModel_obj = dishModel::find($id);
+    {
+        $dishModel_obj = dishModel::find($id);
 
         $validated = $request->validate([
             'dishName' => 'required',
             'dishPrice' => 'required',
             'dishDescription' => 'required'
         ]);
-        if ($request->dishImage)
-                {
+        if ($request->dishImage) {
             $validated = $request->validate([
-                'dishImage' => 'nullable|file|image|mimes:jpeg,png,jpg|max:10000' 
+                'dishImage' => 'nullable|file|image|mimes:jpeg,png,jpg|max:10000'
             ]);
-            if($dishModel_obj->dish_image != 'no_image.png'){
+            if ($dishModel_obj->dish_image != 'no_image.png') {
                 $oldImg = $dishModel_obj->dish_image;
-                unlink(public_path('uploaded_imgs').'/'.$oldImg);
+                unlink(public_path('uploaded_imgs') . '/' . $oldImg);
             }
             $imageName = $request->dishImage;
-            $imageName = date('mdYHis').uniqid().'.'.$request->dishImage->extension();
-            $request->dishImage->move(public_path('uploaded_imgs'),$imageName);
-            
+            $imageName = date('mdYHis') . uniqid() . '.' . $request->dishImage->extension();
+            $request->dishImage->move(public_path('uploaded_imgs'), $imageName);
+
             $dishModel_obj->dish_image = $imageName;
-
-        }else{
-
+        } else {
         }
 
 
@@ -128,8 +124,8 @@ if ($request->dishImage)
         $dishModel_obj->dish_price = $request->dishPrice;
         $dishModel_obj->dish_description = $request->dishDescription;
         $dishModel_obj->save();
-        $request->session()->flash('status','Dish updated sucessfully');
-        return redirect('dishes');    
+        $request->session()->flash('status', 'Dish updated sucessfully');
+        return redirect('dishes');
     }
 
     /**
@@ -140,6 +136,13 @@ if ($request->dishImage)
      */
     public function destroy($id)
     {
-        //
+        $dishModel_obj = dishModel::find($id);
+        if ($dishModel_obj->dish_image != 'no_image.png') {
+            $oldImg = $dishModel_obj->dish_image;
+            unlink(public_path('uploaded_imgs') . '/' . $oldImg);
+        }
+        $dishModel_obj->destroy($id);
+        session()->flash('status', 'Dish deleted sucessfully');
+        return redirect('dishes');
     }
 }

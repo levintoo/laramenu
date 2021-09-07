@@ -42,7 +42,8 @@
       <th scope="col">Dish Price</th>
       <th scope="col">Dish Description</th>
       <th scope="col">Dish Image</th>
-      <th scope="col">Actions</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
     </tr>
   </thead>
   <tbody>
@@ -53,7 +54,14 @@
       <td>{{$d->dish_price}}</td>
       <td>{{$d->dish_description}}</td>
       <td><img width="auto" height="50px" src="{{asset('uploaded_imgs')}}/{{$d->dish_image}}" alt=""></td>
-      <td><a href="dishes/{{$d->id}}/edit">Edit</a> | <a href="dishes/{{$d->id}}">Delete</a></td>
+      <td><a class="btn btn-primary" href="dishes/{{$d->id}}/edit">Edit</a></td>
+      <td>
+        <form action="dishes/{{$d->id}}" method="POST">
+          @csrf 
+          @method('DELETE')
+          <input class="btn btn-danger" type="submit" value="Delete">
+        </form>
+      </td>
     </tr>   
       @endforeach
 
