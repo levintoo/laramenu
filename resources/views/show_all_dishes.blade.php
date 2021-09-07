@@ -53,7 +53,7 @@
       <td>{{$d->dish_name}}</td>
       <td>{{$d->dish_price}}</td>
       <td>{{$d->dish_description}}</td>
-      <td>{{$d->dish_image}}</td>
+      <td><img width="auto" height="50px" src="{{asset('uploaded_imgs')}}/{{$d->dish_image}}" alt=""></td>
       <td>Edit</td>
       <td>Delete</td>
     </tr>   
