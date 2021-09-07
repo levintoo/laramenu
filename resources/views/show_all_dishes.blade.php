@@ -29,12 +29,41 @@
 </div>
   <div class="container">
       @if(session()->has('status'))
-      <div class="alert alert-success">
-          {{session()->get('status')}}
-        <button class="close" data-dismiss='alert'>X</button>
-        </div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{session()->get('status')}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>      
         @endif
-</div>
+        <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Dish Name</th>
+      <th scope="col">Dish Price</th>
+      <th scope="col">Dish Description</th>
+      <th scope="col">Dish Image</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+      @foreach ($dishes as $d)
+      <tr>
+      <th scope="row">{{$d->id}}</th>
+      <td>{{$d->dish_name}}</td>
+      <td>{{$d->dish_price}}</td>
+      <td>{{$d->dish_description}}</td>
+      <td>{{$d->dish_image}}</td>
+      <td>Edit</td>
+      <td>Delete</td>
+    </tr>   
+      @endforeach
 
+
+  </tbody>
+</table>
+
+</div>
+<!-- end of container -->
     </body>
 </html>

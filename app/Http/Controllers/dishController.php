@@ -15,7 +15,8 @@ class dishController extends Controller
      */
     public function index()
     {
-        return view ('show_all_dishes');
+        $dishes = dishModel::all();
+        return view ('show_all_dishes')->with('dishes', $dishes);
     }
 
     /**
