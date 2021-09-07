@@ -96,8 +96,34 @@ if ($request->dishImage)
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        $dishModel_obj = dishModel::find($id);
+    {       
+         $dishModel_obj = dishModel::find($id);
+
+        $validated = $request->validate([
+            'dishName' => 'required',
+            'dishPrice' => 'required',
+            'dishDescription' => 'required'
+        ]);
+        if ($request->dishImage)
+                {
+            $validated = $request->validate([
+                'dishImage' => 'nullable|file|image|mimes:jpeg,png,jpg|max:10000' 
+            ]);
+            if($dishModel_obj->dish_image != 'no_image.png'){
+                $oldImg = $dishModel_obj->dish_image;
+                unlink(public_path('uploaded_imgs').'/'.$oldImg);
+            }
+            $imageName = $request->dishImage;
+            $imageName = date('mdYHis').uniqid().'.'.$request->dishImage->extension();
+            $request->dishImage->move(public_path('uploaded_imgs'),$imageName);
+            
+            $dishModel_obj->dish_image = $imageName;
+
+        }else{
+
+        }
+
+
         $dishModel_obj->dish_name = $request->dishName;
         $dishModel_obj->dish_price = $request->dishPrice;
         $dishModel_obj->dish_description = $request->dishDescription;
