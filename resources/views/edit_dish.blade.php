@@ -23,45 +23,52 @@
     <body class="antialiased">
 
     <div class="jumbotron bg-light p-5 text-center">
-  <h1>Laravel advanced CRUD</h1>
+  <h1>Edit dish:</h1>
   <p>Resize this responsive page to see the effect!</p> 
-  <a href="dishes/create" class="float-end btn btn-primary">Add dish</a>
+  <a href="/dishes" class="float-end btn btn-primary">Back</a>
 </div>
-  <div class="container">
-      @if(session()->has('status'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>{{session()->get('status')}}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>      
-        @endif
-        <table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Dish Name</th>
-      <th scope="col">Dish Price</th>
-      <th scope="col">Dish Description</th>
-      <th scope="col">Dish Image</th>
-      <th scope="col">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-      @foreach ($dishes as $d)
-      <tr>
-      <th scope="row">{{$d->id}}</th>
-      <td>{{$d->dish_name}}</td>
-      <td>{{$d->dish_price}}</td>
-      <td>{{$d->dish_description}}</td>
-      <td><img width="auto" height="50px" src="{{asset('uploaded_imgs')}}/{{$d->dish_image}}" alt=""></td>
-      <td><a href="dishes/{{$d->id}}/edit">Edit</a> | <a href="dishes/{{$d->id}}">Delete</a></td>
-    </tr>   
-      @endforeach
+  
+<div class="container">
+    
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+            <form action="/dishes/{{$dish->id}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Dish Name</label>
+                    <input type="text" value="{{$dish->dish_name}}" name="dishName" class="form-control" id="">
+                    <div id="emailHelp" class="form-text">We'll never share it with anyone else.</div>
+                </div>
 
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Dish Price</label>
+                    <input type="text" value="{{$dish->dish_price}}" name="dishPrice" class="form-control" id="">
+                </div>
 
-  </tbody>
-</table>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Dish Description</label>
+                    <input type="text" value="{{$dish->dish_description}}" name="dishDescription" class="form-control" id="">
+                </div>
 
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Dish Image</label>
+                    <input type="file" name="dishImage" class="form-control" id="">
+                    <div id="emailHelp" class="form-text">We'll never share it with anyone else.</div>
+                </div>
+
+                <div class="mb-3">
+                    <input class="btn btn-primary" type="submit" value="update" name="submit" class="form-control">
+                </div>
+            </form>
 </div>
-<!-- end of container -->
+
     </body>
 </html>

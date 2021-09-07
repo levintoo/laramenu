@@ -84,7 +84,8 @@ if ($request->dishImage)
      */
     public function edit($id)
     {
-        //
+        $dish = dishModel::find($id);
+        return view ('edit_dish')->with('dish', $dish);
     }
 
     /**
@@ -96,7 +97,13 @@ if ($request->dishImage)
      */
     public function update(Request $request, $id)
     {
-        //
+        $dishModel_obj = dishModel::find($id);
+        $dishModel_obj->dish_name = $request->dishName;
+        $dishModel_obj->dish_price = $request->dishPrice;
+        $dishModel_obj->dish_description = $request->dishDescription;
+        $dishModel_obj->save();
+        $request->session()->flash('status','Dish updated sucessfully');
+        return redirect('dishes');    
     }
 
     /**
